@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("Dataset .csv")
+df.dropna(subset=['City', 'Aggregate rating', 'Cuisines', 'Price range'], inplace=True)
+
+# Average Rating by City (Top 20)
+avg_rating = df.groupby('City')['Aggregate rating'].mean().sort_values(ascending=False).head(20)
+plt.figure(figsize=(12, 8))
+avg_rating.plot(kind='barh', color='skyblue')
+plt.title('Top 20 Cities by Average Rating', fontsize=16)
+plt.xlabel('Average Rating')
+plt.ylabel('City')
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=9)
+plt.grid(axis='x', linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.savefig("average_rating_by_city.png")
+plt.show(block=True)
+
+# Number of Restaurants by City (Top 20)
+restaurant_count = df['City'].value_counts().head(20)
+plt.figure(figsize=(12, 8))
+restaurant_count.plot(kind='barh', color='orange')
+plt.title('Top 20 Cities by Number of Restaurants', fontsize=16)
+plt.xlabel('Restaurant Count')
+plt.ylabel('City')
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=9)
+plt.grid(axis='x', linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.savefig("restaurant_count_by_city.png")
+plt.show(block=True)
